@@ -1,7 +1,5 @@
-"use client";
-
-import { CartItem } from '@/types';
-import { ComboSelections } from '@/types/combo';
+import type { CartItem } from '@/types/cart';
+import type { ComboSelections } from '@/types/combo';
 
 // Tek bir ürünün fiyatını hesapla
 export function calculateItemPrice(item: CartItem): number {

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import { CartItem, Product } from '@/types';
+import { CartItem } from '@/types/cart';
+import { Product } from '@/types';
 import { calculateCartTotal } from '@/lib/utils/price-calculator';
 
 interface CartStore {

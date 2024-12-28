@@ -1,3 +1,13 @@
+import { ComboGroup } from './api';
+import { ComboSelections } from './combo';
+
+// Base interfaces
+export interface Category {
+  id: string;
+  name: string;
+  image: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -13,6 +23,9 @@ export interface Product {
   isVegetarian?: boolean;
   rating?: number;
   isCombo?: boolean;
-  Combo?: import('@/types/api').ComboGroup[];
-  comboSelections?: import('@/types/combo').ComboSelections;
+  Combo?: ComboGroup[];
+  comboSelections?: ComboSelections;
 }
+
+// Re-export other types
+export type { CartItem } from './cart';

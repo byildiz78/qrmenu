@@ -8,8 +8,14 @@ interface ProductBadgesProps {
   product: Product;
 }
 
+interface Badge {
+  icon: string;
+  value: string;
+  className: string;
+}
+
 export function ProductBadges({ product }: ProductBadgesProps) {
-  const badges = [
+  const badges: Badge[] = [
     product.prepTime && {
       icon: "time",
       value: `${product.prepTime} dk`,
@@ -25,7 +31,7 @@ export function ProductBadges({ product }: ProductBadgesProps) {
       value: "Vejetaryen",
       className: "bg-green-500/10 text-green-600 backdrop-blur-md border border-green-200/30 hover:bg-green-500/20 transition-colors"
     }
-  ].filter(Boolean);
+  ].filter((badge): badge is Badge => Boolean(badge));
 
   return (
     <div className="flex flex-wrap gap-2 mb-6">

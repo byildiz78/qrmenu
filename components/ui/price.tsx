@@ -1,10 +1,12 @@
-export function formatPrice(price: number): string {
-  return new Intl.NumberFormat('tr-TR', {
-    style: 'currency',
-    currency: 'TRY',
-  }).format(price);
+interface PriceProps {
+  amount: number;
+  className?: string;
 }
 
-export function Price({ amount }: { amount: number }) {
-  return <span className="font-medium">{formatPrice(amount)}</span>;
+export function Price({ amount, className }: PriceProps) {
+  return (
+    <span className={className}>
+      {amount.toFixed(2)} ₺
+    </span>
+  );
 }
