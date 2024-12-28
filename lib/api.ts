@@ -16,9 +16,8 @@ export async function fetchMenu(): Promise<ApiCategory[]> {
       body: JSON.stringify({
         currentMenuLastUpdateDateTime: "2000-01-01"
       }),
-      // Add cache and revalidation settings
       next: {
-        revalidate: 60 // Revalidate every minute
+        revalidate: 60
       }
     });
 
@@ -35,7 +34,6 @@ export async function fetchMenu(): Promise<ApiCategory[]> {
     return data.d.Menu;
   } catch (error) {
     console.error('Error fetching menu:', error);
-    // Return empty array instead of throwing to prevent RSC errors
     return [];
   }
 }
@@ -53,8 +51,12 @@ export function mapApiDataToApp(apiData: ApiCategory[]): {
 
     const products: Product[] = apiData.flatMap(cat => 
       cat.Items.map(item => {
-        const hasValidCombo = item.Combo?.length > 0 && 
-          item.Combo.some(group => group.Items?.length > 0);
+        // Safely check combo validity
+        const combo = item.Combo || [];
+        const hasValidCombo = combo.length > 0 && combo.some(group => {
+          const items = group.Items || [];
+          return items.length > 0;
+        });
 
         const baseProduct = {
           id: item.MenuItemKey,
@@ -74,7 +76,7 @@ export function mapApiDataToApp(apiData: ApiCategory[]): {
           return {
             ...baseProduct,
             isCombo: true,
-            Combo: processComboGroups(item.Combo!)
+            Combo: processComboGroups(combo)
           };
         }
 

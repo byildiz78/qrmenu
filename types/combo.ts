@@ -1,6 +1,8 @@
+import { ComboItem as ApiComboItem } from './api';
+
 export interface ComboSelection {
   groupName: string;
-  item: ComboItem;
+  item: ApiComboItem;
   quantity: number;
 }
 

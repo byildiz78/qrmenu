@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductBadge } from '@/components/ui/product-badge';
+import { ProductBadge, BadgeIcon } from '@/components/ui/product-badge';
 import { motion } from 'framer-motion';
 import type { Product } from '@/types';
 
@@ -9,7 +9,7 @@ interface ProductBadgesProps {
 }
 
 interface Badge {
-  icon: string;
+  icon: BadgeIcon;
   value: string;
   className: string;
 }
@@ -43,8 +43,8 @@ export function ProductBadges({ product }: ProductBadgesProps) {
           transition={{ delay: index * 0.1 }}
           className="group/badge"
         >
-          <ProductBadge 
-            {...badge} 
+          <ProductBadge
+            {...badge}
             className={`${badge.className} hover:scale-105 active:scale-95 transition-transform cursor-default`}
           />
         </motion.div>

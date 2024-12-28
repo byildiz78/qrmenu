@@ -1,12 +1,11 @@
 import { ComboGroup, ComboItem } from '@/types/api';
 
-// Combo gruplarını işle ve doğrula
 export function processComboGroups(groups: ComboGroup[]): ComboGroup[] {
   return groups
-    .filter(group => group.Items?.length > 0) // Boş grupları filtrele
+    .filter(group => group.Items?.length > 0)
     .map(group => ({
       ...group,
-      Items: group.Items.map(item => ({
+      Items: (group.Items || []).map(item => ({
         MenuItemKey: item.MenuItemKey,
         MenuItemText: item.MenuItemText,
         Description: item.Description || '',
@@ -18,5 +17,3 @@ export function processComboGroups(groups: ComboGroup[]): ComboGroup[] {
       }))
     }));
 }
-
-// Rest of the file remains the same...

@@ -1,33 +1,29 @@
-"use client";
-
 import { cn } from "@/lib/utils";
-import { Clock, Flame, Leaf, Gauge } from "lucide-react";
+import { Clock, Flame, Leaf, Scale } from "lucide-react";
+
+export type BadgeIcon = "time" | "spicy" | "vegetarian" | "calories";
 
 interface ProductBadgeProps {
-  icon: "time" | "spicy" | "vegetarian" | "calories";
+  icon: BadgeIcon;
   value: string;
   className?: string;
 }
 
-const icons = {
+const icons: Record<BadgeIcon, React.ComponentType<any>> = {
   time: Clock,
   spicy: Flame,
   vegetarian: Leaf,
-  calories: Gauge,
+  calories: Scale,
 };
 
 export function ProductBadge({ icon, value, className }: ProductBadgeProps) {
   const Icon = icons[icon];
 
   return (
-    <div
-      className={cn(
-        "inline-flex items-center gap-1 px-2 py-1 rounded-full",
-        "bg-secondary/80 backdrop-blur-sm",
-        "text-sm font-medium",
-        className
-      )}
-    >
+    <div className={cn(
+      "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-sm",
+      className
+    )}>
       <Icon className="h-3.5 w-3.5" />
       <span>{value}</span>
     </div>
