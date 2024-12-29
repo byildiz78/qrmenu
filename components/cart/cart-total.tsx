@@ -3,11 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { Price } from "@/components/ui/price";
 import { useCartStore } from "@/store/cart";
+import { useLanguageStore } from "@/store/language";
 import { motion } from "framer-motion";
 import { ShoppingBag, ArrowRight } from 'lucide-react';
 
 export function CartTotal() {
   const { total } = useCartStore();
+  const { t } = useLanguageStore();
 
   return (
     <motion.div
@@ -21,13 +23,13 @@ export function CartTotal() {
             <ShoppingBag className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">Toplam Tutar</p>
+            <p className="text-sm text-muted-foreground">{t.common.total}</p>
             <Price amount={total} className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent" />
           </div>
         </div>
       </div>
       <Button size="lg" className="w-full h-12 text-lg gap-2 group">
-        Sipariş Ver
+        {t.common.placeOrder}
         <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
       </Button>
     </motion.div>

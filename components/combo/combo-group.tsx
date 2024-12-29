@@ -4,33 +4,49 @@ import { ComboGroup as ComboGroupType, ComboItem } from '@/types/api';
 import { ComboSelections } from '@/types/combo';
 import { Badge } from '@/components/ui/badge';
 import { ComboGroupItem } from './combo-group-item';
+import { useLanguageStore } from '@/store/language';
 
 interface ComboGroupProps {
   group: ComboGroupType;
   selections: ComboSelections;
   onSelect: (groupName: string, item: ComboItem, quantity: number) => void;
+  progress: number;
 }
 
-export function ComboGroup({ group, selections, onSelect }: ComboGroupProps) {
+export function ComboGroup({ group, selections, onSelect, progress }: ComboGroupProps) {
   const currentSelections = selections[group.GroupName] || [];
   const totalQuantity = currentSelections.reduce((sum, s) => sum + s.quantity, 0);
+  const { t } = useLanguageStore();
   
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold">{group.GroupName}</h3>
-          <p className="text-sm text-muted-foreground">
-            {group.IsForcedGroup ? 'Zorunlu Seçim' : 'Opsiyonel'}
-            {group.MaxQuantity > 0 && ` • Maksimum ${group.MaxQuantity} adet`}
-          </p>
+          <h3 className="text-xl sm:text-2xl font-bold mb-2">{group.GroupName}</h3>
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant={group.IsForcedGroup ? "default" : "secondary"} className="text-xs sm:text-sm">
+              {group.IsForcedGroup ? t.product.requiredSelection : t.product.optional}
+            </Badge>
+            {group.MaxQuantity > 0 && (
+              <Badge variant="outline" className="text-xs sm:text-sm">
+                {t.product.maximum}: {group.MaxQuantity}
+              </Badge>
+            )}
+            <Badge variant="outline" className="text-xs sm:text-sm">
+              {totalQuantity} / {group.MaxQuantity || '∞'}
+            </Badge>
+          </div>
         </div>
-        <Badge variant="outline">
-          {totalQuantity} / {group.MaxQuantity || '∞'}
-        </Badge>
+
+        <div className="w-full sm:w-32 h-2 rounded-full bg-secondary overflow-hidden">
+          <div 
+            className="h-full bg-primary transition-all duration-300"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
       </div>
 
-      <div className="grid gap-4">
+      <div className="grid gap-3">
         {group.Items.map((item) => (
           <ComboGroupItem
             key={item.MenuItemKey}

@@ -12,7 +12,7 @@ export function CartItems() {
       <AnimatePresence initial={false}>
         {items.map((item) => (
           <motion.div
-            key={item.product.id}
+            key={`${item.product.id}-${JSON.stringify(item.product.comboSelections)}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}

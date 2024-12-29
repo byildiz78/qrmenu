@@ -1,13 +1,19 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { ComboGroup as ComboGroupType, ComboItem } from '@/types/api';
 import { ComboSelections } from '@/types/combo';
 import { ComboGroup } from './combo-group';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { ShoppingCart } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { useLanguageStore } from '@/store/language';
+import { 
+  calculateTotalPrice,
+  validateComboSelections,
+  calculateGroupProgress 
+} from '@/lib/utils/combo-selector';
 
 interface ComboSelectorProps {
   groups: ComboGroupType[];
@@ -18,42 +24,24 @@ interface ComboSelectorProps {
 export function ComboSelector({ groups, basePrice, onAddToCart }: ComboSelectorProps) {
   const [selections, setSelections] = useState<ComboSelections>({});
   const { toast } = useToast();
+  const { t } = useLanguageStore();
 
-  const validateSelections = () => {
-    for (const group of groups) {
-      const groupSelections = selections[group.GroupName] || [];
-      const totalQuantity = groupSelections.reduce((sum, s) => sum + s.quantity, 0);
-      
-      if (group.IsForcedGroup && totalQuantity < group.ForcedQuantity) {
-        return {
-          isValid: false,
-          error: `${group.GroupName} için ${group.ForcedQuantity} adet seçim yapmalısınız`
-        };
-      }
-      
-      if (group.MaxQuantity > 0 && totalQuantity > group.MaxQuantity) {
-        return {
-          isValid: false,
-          error: `${group.GroupName} için en fazla ${group.MaxQuantity} adet seçebilirsiniz`
-        };
-      }
-    }
-    
-    return { isValid: true };
-  };
-
-  const handleSelect = (groupName: string, item: ComboItem, quantity: number) => {
+  const handleSelect = useCallback((groupName: string, item: ComboItem, quantity: number) => {
     setSelections(prev => {
       const group = groups.find(g => g.GroupName === groupName);
-      const currentSelections = prev[groupName] || [];
-      const totalQuantity = currentSelections.reduce((sum, s) => 
-        s.item.MenuItemKey !== item.MenuItemKey ? sum + s.quantity : sum, 0
-      ) + quantity;
+      if (!group) return prev;
 
-      // Maksimum seçim kontrolü
-      if (group?.MaxQuantity && totalQuantity > group.MaxQuantity) {
+      const currentSelections = prev[groupName] || [];
+      const otherSelections = currentSelections.filter(s => s.item.MenuItemKey !== item.MenuItemKey);
+      const newQuantity = quantity;
+
+      // Calculate total quantity including the new selection
+      const totalQuantity = otherSelections.reduce((sum, s) => sum + s.quantity, 0) + newQuantity;
+
+      // Check if adding this selection would exceed the maximum
+      if (group.MaxQuantity > 0 && totalQuantity > group.MaxQuantity) {
         toast({
-          title: "Maksimum Seçim Sınırı",
+          title: t.common.error,
           description: `${groupName} için en fazla ${group.MaxQuantity} adet seçebilirsiniz`,
           variant: "destructive"
         });
@@ -63,19 +51,19 @@ export function ComboSelector({ groups, basePrice, onAddToCart }: ComboSelectorP
       return {
         ...prev,
         [groupName]: [
-          ...currentSelections.filter(s => s.item.MenuItemKey !== item.MenuItemKey),
-          ...(quantity > 0 ? [{ groupName, item, quantity }] : [])
+          ...otherSelections,
+          ...(newQuantity > 0 ? [{ groupName, item, quantity: newQuantity }] : [])
         ]
       };
     });
-  };
+  }, [groups, toast, t]);
 
-  const handleAddToCart = () => {
-    const validation = validateSelections();
+  const handleAddToCart = useCallback(() => {
+    const validation = validateComboSelections(groups, selections);
     
     if (!validation.isValid) {
       toast({
-        title: "Eksik Seçim",
+        title: t.common.error,
         description: validation.error,
         variant: "destructive"
       });
@@ -83,15 +71,7 @@ export function ComboSelector({ groups, basePrice, onAddToCart }: ComboSelectorP
     }
     
     onAddToCart(selections);
-  };
-
-  const calculateTotal = () => {
-    let total = basePrice;
-    Object.values(selections).flat().forEach(selection => {
-      total += selection.item.ExtraPriceTakeOut_TL * selection.quantity;
-    });
-    return total;
-  };
+  }, [groups, selections, onAddToCart, toast, t]);
 
   return (
     <motion.div 
@@ -99,32 +79,39 @@ export function ComboSelector({ groups, basePrice, onAddToCart }: ComboSelectorP
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <AnimatePresence mode="wait">
-        {groups.map((group) => (
+      <div className="space-y-12">
+        {groups.map((group, index) => (
           <motion.div
             key={group.GroupName}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
+            transition={{ delay: index * 0.1 }}
+            className="relative"
           >
+            {index !== groups.length - 1 && (
+              <div className="absolute -bottom-6 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+            )}
+            
             <ComboGroup
               group={group}
               selections={selections}
               onSelect={handleSelect}
+              progress={calculateGroupProgress(group, selections)}
             />
           </motion.div>
         ))}
-      </AnimatePresence>
+      </div>
       
-      <div className="sticky bottom-0 bg-background/95 backdrop-blur-lg border-t p-4">
+      <div className="sticky bottom-0 bg-background/95 backdrop-blur-lg border-t p-4 -mx-4">
         <Button 
-          className="w-full gap-2" 
-          size="lg"
+          className="w-full gap-2 h-12 sm:h-14 text-base sm:text-lg relative overflow-hidden group"
           onClick={handleAddToCart}
         >
-          <ShoppingCart className="h-4 w-4" />
-          Sepete Ekle ({calculateTotal().toFixed(2)} ₺)
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-foreground/10 via-transparent to-primary-foreground/10 group-hover:translate-x-full duration-1000 transition-transform" />
+          <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
+          <span className="hidden sm:inline">{t.common.addToCart}</span>
+          <span className="sm:hidden">{t.common.addToCart}</span>
+          <span className="font-bold">({calculateTotalPrice(basePrice, selections).toFixed(2)} ₺)</span>
         </Button>
       </div>
     </motion.div>

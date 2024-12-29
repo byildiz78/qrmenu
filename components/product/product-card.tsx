@@ -45,7 +45,7 @@ export function ProductCard({ product, index, onAddToCart }: ProductCardProps) {
           <ProductBadges product={product} />
           {product.isCombo ? (
             <Link href={`/product/${product.id}`}>
-              <AddToCartButton onClick={() => {}} text="Menüyü Görüntüle" />
+              <AddToCartButton onClick={() => {}} isCombo={true} />
             </Link>
           ) : (
             <AddToCartButton onClick={() => onAddToCart(product)} />
