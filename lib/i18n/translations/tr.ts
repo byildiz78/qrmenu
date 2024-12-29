@@ -10,15 +10,15 @@ export const tr = {
     categories: "Kategoriler",
     products: "Ürünler",
     notFound: "Sonuç Bulunamadı",
-    tryAgain: "Tekrar Dene",
+    tryAgain: "Tekrar Deneyin",
     loading: "Yükleniyor",
     error: "Hata",
     emptyCart: "Sepetiniz boş",
-    emptyCartMessage: "Sepetinize ürün eklemek için menüyü inceleyebilirsiniz",
+    emptyCartMessage: "Sepetinize ürün eklemek için menüye göz atın",
     searchPlaceholder: "Ürün veya kategori ara...",
     suggestedSearches: "Önerilen aramalar:",
     noResults: "Sonuç bulunamadı",
-    tryDifferentSearch: "Farklı bir arama terimi deneyebilirsiniz"
+    tryDifferentSearch: "Farklı bir arama terimi deneyin"
   },
   product: {
     spicy: "Acılı",
@@ -28,7 +28,9 @@ export const tr = {
     minutes: "dk",
     menuSelections: "Menü Seçimleri",
     requiredSelection: "Zorunlu Seçim",
-    optional: "Opsiyonel",
-    maximum: "Maksimum"
+    optional: "İsteğe Bağlı",
+    maximum: "Maksimum",
+    maxQuantityError: "{group} için en fazla {max} adet seçebilirsiniz",
+    requiredSelectionError: "Lütfen {group} için seçim yapınız"
   }
 };

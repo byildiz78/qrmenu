@@ -1,19 +1,18 @@
 "use client";
 
 import { useState, useCallback } from 'react';
-import { ComboGroup as ComboGroupType, ComboItem } from '@/types/api';
-import { ComboSelections } from '@/types/combo';
+import { ComboGroup as ComboGroupType, ComboItem } from '../../types/api';
+import { ComboSelections } from '../../types/combo';
 import { ComboGroup } from './combo-group';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { Button } from '../ui/button';
+import { useToast } from '../../hooks/use-toast';
 import { ShoppingCart } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useLanguageStore } from '@/store/language';
+import { useLanguageStore } from '../../store/language';
 import { 
   calculateTotalPrice,
-  validateComboSelections,
   calculateGroupProgress 
-} from '@/lib/utils/combo-selector';
+} from '../../lib/utils/combo-selector';
 
 interface ComboSelectorProps {
   groups: ComboGroupType[];
@@ -61,17 +60,23 @@ export function ComboSelector({ groups, basePrice, onAddToCart }: ComboSelectorP
   }, [groups, toast, t]);
 
   const handleAddToCart = useCallback(() => {
-    const validation = validateComboSelections(groups, selections);
-    
-    if (!validation.isValid) {
+    // Check for required selections
+    const requiredGroups = groups.filter(group => group.IsForcedGroup);
+    const missingSelections = requiredGroups.filter(group => {
+      const groupSelections = selections[group.GroupName] || [];
+      return groupSelections.length === 0;
+    });
+
+    if (missingSelections.length > 0) {
+      // Show toast for the first missing required selection
       toast({
         title: t.common.error,
-        description: validation.error,
+        description: t.product.requiredSelectionError.replace('{group}', missingSelections[0].GroupName),
         variant: "destructive"
       });
       return;
     }
-    
+
     onAddToCart(selections);
   }, [groups, selections, onAddToCart, toast, t]);
 

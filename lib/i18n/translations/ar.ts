@@ -30,6 +30,7 @@ export const ar = {
     requiredSelection: "اختيار مطلوب",
     optional: "اختياري",
     maximum: "الحد الأقصى",
-    maxQuantityError: "يمكنك اختيار {max} عناصر كحد أقصى من {group}"
+    maxQuantityError: "يمكنك اختيار {max} عناصر كحد أقصى من {group}",
+    requiredSelectionError: "الرجاء تحديد اختيار لـ {group}"
   }
 };

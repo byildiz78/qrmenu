@@ -30,6 +30,7 @@ export const ru = {
     requiredSelection: "Обязательный выбор",
     optional: "Необязательно",
     maximum: "Максимум",
-    maxQuantityError: "Вы можете выбрать максимум {max} позиций из {group}"
+    maxQuantityError: "Вы можете выбрать максимум {max} позиций из {group}",
+    requiredSelectionError: "Пожалуйста, сделайте выбор для {group}"
   }
 };

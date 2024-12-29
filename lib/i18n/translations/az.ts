@@ -30,6 +30,7 @@ export const az = {
     requiredSelection: "Məcburi Seçim",
     optional: "İstəyə bağlı",
     maximum: "Maksimum",
-    maxQuantityError: "{group} üçün maksimum {max} ədəd seçə bilərsiniz"
+    maxQuantityError: "{group} üçün maksimum {max} ədəd seçə bilərsiniz",
+    requiredSelectionError: "Zəhmət olmasa {group} üçün seçim edin"
   }
 };

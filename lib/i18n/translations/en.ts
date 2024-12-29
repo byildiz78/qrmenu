@@ -30,6 +30,7 @@ export const en = {
     requiredSelection: "Required Selection",
     optional: "Optional",
     maximum: "Maximum",
-    maxQuantityError: "You can select maximum {max} items from {group}"
+    maxQuantityError: "You can select maximum {max} items from {group}",
+    requiredSelectionError: "Please make a selection for {group}"
   }
 };
