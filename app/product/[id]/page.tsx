@@ -18,7 +18,12 @@ export async function generateStaticParams() {
   }
 }
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
+export default async function ProductPage({
+  params,
+}: {
+  params: { id: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   try {
     const menuData = await fetchMenu();
     const productExists = menuData.some(category => 

@@ -14,12 +14,12 @@ export async function generateStaticParams() {
   }
 }
 
-interface CategoryPageProps {
+export default async function CategoryPage({
+  params,
+}: {
   params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-export default async function CategoryPage({ params }: CategoryPageProps) {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   try {
     const menuData = await fetchMenu();
     const categoryExists = menuData.some(cat => cat.MenuGroupKey === params.id);
