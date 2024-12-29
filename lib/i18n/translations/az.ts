@@ -2,23 +2,23 @@ export const az = {
   common: {
     search: "Menyuda Axtar",
     menu: "Menyu",
-    cart: "Səbətim",
-    total: "Ümumi Məbləğ",
-    addToCart: "Səbətə Əlavə Et",
-    viewMenu: "Menyunu Göstər",
-    placeOrder: "Sifariş Ver",
+    cart: "Səbət",
+    total: "Cəmi",
+    addToCart: "Səbətə əlavə et",
+    viewMenu: "Menyuya bax",
+    placeOrder: "Sifariş ver",
     categories: "Kateqoriyalar",
     products: "Məhsullar",
-    notFound: "Nəticə Tapılmadı",
-    tryAgain: "Yenidən Cəhd Edin",
+    notFound: "Nəticə tapılmadı",
+    tryAgain: "Yenidən cəhd edin",
     loading: "Yüklənir",
     error: "Xəta",
     emptyCart: "Səbətiniz boşdur",
-    emptyCartMessage: "Səbətə məhsul əlavə etmək üçün menyuya baxa bilərsiniz",
+    emptyCartMessage: "Səbətinizə məhsul əlavə etmək üçün menyuya baxın",
     searchPlaceholder: "Məhsul və ya kateqoriya axtar...",
-    suggestedSearches: "Təklif edilən axtarışlar:",
+    suggestedSearches: "Təklif olunan axtarışlar:",
     noResults: "Nəticə tapılmadı",
-    tryDifferentSearch: "Fərqli axtarış sözü yoxlayın"
+    tryDifferentSearch: "Fərqli axtarış sözü sınayın"
   },
   product: {
     spicy: "Acılı",
@@ -28,7 +28,8 @@ export const az = {
     minutes: "dəq",
     menuSelections: "Menyu Seçimləri",
     requiredSelection: "Məcburi Seçim",
-    optional: "İstəyə Bağlı",
-    maximum: "Maksimum"
+    optional: "İstəyə bağlı",
+    maximum: "Maksimum",
+    maxQuantityError: "{group} üçün maksimum {max} ədəd seçə bilərsiniz"
   }
 };

@@ -29,6 +29,7 @@ export const en = {
     menuSelections: "Menu Selections",
     requiredSelection: "Required Selection",
     optional: "Optional",
-    maximum: "Maximum"
+    maximum: "Maximum",
+    maxQuantityError: "You can select maximum {max} items from {group}"
   }
 };

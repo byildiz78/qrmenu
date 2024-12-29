@@ -42,7 +42,9 @@ export function ComboSelector({ groups, basePrice, onAddToCart }: ComboSelectorP
       if (group.MaxQuantity > 0 && totalQuantity > group.MaxQuantity) {
         toast({
           title: t.common.error,
-          description: `${groupName} için en fazla ${group.MaxQuantity} adet seçebilirsiniz`,
+          description: t.product.maxQuantityError
+            .replace('{group}', groupName)
+            .replace('{max}', group.MaxQuantity.toString()),
           variant: "destructive"
         });
         return prev;
@@ -109,8 +111,7 @@ export function ComboSelector({ groups, basePrice, onAddToCart }: ComboSelectorP
         >
           <div className="absolute inset-0 bg-gradient-to-r from-primary-foreground/10 via-transparent to-primary-foreground/10 group-hover:translate-x-full duration-1000 transition-transform" />
           <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
-          <span className="hidden sm:inline">{t.common.addToCart}</span>
-          <span className="sm:hidden">{t.common.addToCart}</span>
+          <span>{t.common.addToCart}</span>
           <span className="font-bold">({calculateTotalPrice(basePrice, selections).toFixed(2)} ₺)</span>
         </Button>
       </div>

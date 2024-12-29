@@ -5,16 +5,16 @@ export const ru = {
     cart: "Корзина",
     total: "Итого",
     addToCart: "В корзину",
-    viewMenu: "Посмотреть меню",
+    viewMenu: "Смотреть меню",
     placeOrder: "Оформить заказ",
     categories: "Категории",
     products: "Продукты",
     notFound: "Ничего не найдено",
-    tryAgain: "Попробовать снова",
+    tryAgain: "Попробуйте снова",
     loading: "Загрузка",
     error: "Ошибка",
     emptyCart: "Корзина пуста",
-    emptyCartMessage: "Вы можете просмотреть меню, чтобы добавить товары в корзину",
+    emptyCartMessage: "Просмотрите меню, чтобы добавить товары в корзину",
     searchPlaceholder: "Поиск продуктов или категорий...",
     suggestedSearches: "Рекомендуемые запросы:",
     noResults: "Результатов не найдено",
@@ -29,6 +29,7 @@ export const ru = {
     menuSelections: "Выбор меню",
     requiredSelection: "Обязательный выбор",
     optional: "Необязательно",
-    maximum: "Максимум"
+    maximum: "Максимум",
+    maxQuantityError: "Вы можете выбрать максимум {max} позиций из {group}"
   }
 };

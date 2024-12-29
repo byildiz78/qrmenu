@@ -2,7 +2,7 @@ export const ar = {
   common: {
     search: "البحث في القائمة",
     menu: "القائمة",
-    cart: "سلة التسوق",
+    cart: "السلة",
     total: "المجموع",
     addToCart: "أضف إلى السلة",
     viewMenu: "عرض القائمة",
@@ -11,14 +11,14 @@ export const ar = {
     products: "المنتجات",
     notFound: "لم يتم العثور على نتائج",
     tryAgain: "حاول مرة أخرى",
-    loading: "جار التحميل",
+    loading: "جاري التحميل",
     error: "خطأ",
     emptyCart: "السلة فارغة",
-    emptyCartMessage: "يمكنك تصفح القائمة لإضافة منتجات إلى سلة التسوق",
-    searchPlaceholder: "البحث عن منتجات أو فئات...",
+    emptyCartMessage: "تصفح القائمة لإضافة العناصر إلى سلتك",
+    searchPlaceholder: "البحث عن المنتجات أو الفئات...",
     suggestedSearches: "عمليات البحث المقترحة:",
     noResults: "لم يتم العثور على نتائج",
-    tryDifferentSearch: "جرب البحث بكلمات مختلفة"
+    tryDifferentSearch: "جرب مصطلح بحث مختلف"
   },
   product: {
     spicy: "حار",
@@ -29,6 +29,7 @@ export const ar = {
     menuSelections: "اختيارات القائمة",
     requiredSelection: "اختيار مطلوب",
     optional: "اختياري",
-    maximum: "الحد الأقصى"
+    maximum: "الحد الأقصى",
+    maxQuantityError: "يمكنك اختيار {max} عناصر كحد أقصى من {group}"
   }
 };

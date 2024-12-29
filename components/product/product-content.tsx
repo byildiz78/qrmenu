@@ -15,6 +15,7 @@ import { useCartStore } from '@/store/cart';
 import { useRouter } from 'next/navigation';
 import { ComboSelections } from '@/types/combo';
 import { ShoppingCart } from 'lucide-react';
+import { useLanguageStore } from '@/store/language';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -40,14 +41,15 @@ const itemVariants = {
 export default function ProductContent({ params }: { params: { id: string } }) {
   const { products, isLoading, error } = useMenuStore();
   const addToCart = useCartStore((state) => state.addItem);
+  const { t } = useLanguageStore();
   const router = useRouter();
-  const product = products.find((p) => p.id === params.id);
+  const product = products.find((p: { id: string }) => p.id === params.id);
 
   if (error) {
     return (
       <div className="container mx-auto px-4 pt-40 text-center">
         <h1 className="text-2xl font-bold text-red-500">{error}</h1>
-        <p className="text-muted-foreground mt-2">Lütfen daha sonra tekrar deneyin.</p>
+        <p className="text-muted-foreground mt-2">{t.common.tryAgain}</p>
       </div>
     );
   }
@@ -120,7 +122,7 @@ export default function ProductContent({ params }: { params: { id: string } }) {
           
           {product.isCombo && product.Combo ? (
             <div className="border-t pt-6">
-              <h2 className="text-2xl font-bold mb-6">Menü Seçimleri</h2>
+              <h2 className="text-2xl font-bold mb-6">{t.product.menuSelections}</h2>
               <ComboSelector
                 groups={product.Combo}
                 basePrice={product.price}
@@ -138,7 +140,7 @@ export default function ProductContent({ params }: { params: { id: string } }) {
                 }}
               >
                 <ShoppingCart className="h-4 w-4" />
-                Sepete Ekle ({product.price} ₺)
+                {t.common.addToCart} ({product.price} ₺)
               </Button>
             </div>
           )}

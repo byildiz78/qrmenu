@@ -47,9 +47,7 @@ export function SearchDialog() {
       <DialogTrigger asChild>
         <button className="relative bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 p-2 rounded-lg group">
           <Search className="h-5 w-5 text-white group-hover:scale-110 transition-transform duration-300" />
-          <kbd className="absolute right-1 top-1 pointer-events-none hidden sm:inline-flex h-4 select-none items-center gap-1 rounded border bg-background/80 px-1.5 font-mono text-[10px] font-medium opacity-50">
-            <span className="text-xs">⌘</span>K
-          </kbd>
+          {/* Keyboard shortcut removed to fix visual issue */}
         </button>
       </DialogTrigger>
       <DialogContent className="p-0 gap-0 max-w-2xl">
